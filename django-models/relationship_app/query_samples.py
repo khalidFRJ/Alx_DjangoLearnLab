@@ -6,6 +6,8 @@ Library.objects.get(name=library_name)", "books.all()
 
 Author.objects.get(name=author_name)", "objects.filter(author=author)
 
+Librarian.objects.get(library=
+
 def get_books_by_author(author_name):
     # Query all books by a specific author
     books = Book.objects.filter(author__name=author_name)

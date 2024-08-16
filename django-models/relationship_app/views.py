@@ -18,7 +18,7 @@ from django.contrib.auth.views import LoginView
 class CustomLoginView(LoginView):
     template_name = 'login.html'
 
-
+UserCreationForm()", "relationship_app/register.html
 from django.contrib.auth.views import LogoutView
 
 class CustomLogoutView(LogoutView):

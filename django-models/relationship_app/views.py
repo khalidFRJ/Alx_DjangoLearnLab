@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from .models import Book
+from django.views.generic.detail import DetailView
 
 def list_books(request):
     books = Book.objects.all()
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
-
-from django.views.generic import DetailView
+from django.views.generic.detail import DetailView
 from .models import Library
 
 class LibraryDetailView(DetailView):

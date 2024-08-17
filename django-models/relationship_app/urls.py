@@ -46,4 +46,6 @@ urlpatterns = [
     path('books/<int:pk>/delete/', views.delete_book, name='delete_book'),
 ]
 
+add_book/", "edit_book/
+
 

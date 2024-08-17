@@ -69,3 +69,7 @@ def admin_view(request):
     return render(request, 'admin_view.html')
 
 
+
+
+
+

@@ -8,6 +8,8 @@ from django.views import generic
 from django.contrib.auth.decorators import user_passes_test
 from .models import Library
 
+relationship_app/member_view.html
+
 from django.shortcuts import render
 from django.contrib.auth.decorators import user_passes_test
 

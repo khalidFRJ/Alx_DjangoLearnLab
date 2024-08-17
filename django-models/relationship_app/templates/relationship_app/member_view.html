@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Page</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Link to a CSS file if needed -->
+</head>
+<body>
+    <h1>Welcome to the Member Page</h1>
+    <p>This page is accessible only to members.</p>
+
+    <!-- You can add more content here related to member-specific features -->
+    <div>
+        <a href="{% url 'view_books' %}">View Available Books</a>
+        <a href="{% url 'manage_profile' %}">Manage Your Profile</a>
+    </div>
+
+    <!-- Add more details or features here -->
+</body>
+</html>

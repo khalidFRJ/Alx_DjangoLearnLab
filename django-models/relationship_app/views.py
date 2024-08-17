@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.decorators import user_passes_test
+from .models import Library
 
 from .models import Book, Library
 UserCreationForm()", "relationship_app/register.html

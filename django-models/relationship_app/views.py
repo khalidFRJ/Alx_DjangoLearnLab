@@ -57,4 +57,7 @@ def librarian_view(request):
 @user_passes_test(is_member)
 def member_view(request):
     return render(request, 'member_view.html')
+    
+def is_admin(user):
+    return user.userprofile.role == 'Admin'
 

@@ -10,7 +10,7 @@ def book_list(request):
     return render(request, 'myapp/mymodel_list.html', {'objects': objects})
 
 @permission_required('myapp.can_edit', raise_exception=True)
-def book(request, pk):
+def books(request, pk):
     obj = get_object_or_404(MyModel, pk=pk)
     # Handle the edit logic here
     return render(request, 'myapp/mymodel_edit.html', {'object': obj})

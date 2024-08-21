@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Librarian Page</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Link to a CSS file if needed -->
+</head>
+<body>
+    <h1>Welcome to the Librarian Page</h1>
+    <p>This page is accessible only to librarians.</p>
+
+    <!-- You can add more content here like library management tools or links -->
+    <div>
+        <a href="{% url 'manage_books' %}">Manage Books</a>
+        <a href="{% url 'view_reports' %}">View Reports</a>
+    </div>
+
+    <!-- Add more details or management tools here -->
+</body>
+</html>

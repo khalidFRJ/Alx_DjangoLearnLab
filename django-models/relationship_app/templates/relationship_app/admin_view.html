@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Link to a CSS file if you have one -->
+</head>
+<body>
+    <h1>Welcome to the Admin Page</h1>
+    <p>This page is accessible only to administrators.</p>
+
+    <!-- You can add more content here like dashboards or links to other admin pages -->
+    <div>
+        <a href="{% url 'some_admin_feature' %}">Admin Tool 1</a>
+        <a href="{% url 'another_admin_feature' %}">Admin Tool 2</a>
+    </div>
+
+    <!-- Add more details or admin tools here -->
+</body>
+</html>

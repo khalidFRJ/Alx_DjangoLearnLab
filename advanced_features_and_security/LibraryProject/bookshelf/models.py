@@ -39,4 +39,22 @@ class CustomUser(AbstractUser):
 from django.conf import settings
 user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
+from django.db import models
+
+class book(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+
+    class Meta:
+        permissions = [
+            ("can_view", "Can view model"),
+            ("can_create", "Can create model"),
+            ("can_edit", "Can edit model"),
+            ("can_delete", "Can delete model"),
+        ]
+
+    def __str__(self):
+        return self.name
+
+
 

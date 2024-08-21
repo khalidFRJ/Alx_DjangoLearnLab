@@ -35,3 +35,8 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
 
+
+from django.conf import settings
+user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+

@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
 from django.urls import reverse
@@ -62,3 +63,36 @@ class BookAPITestCase(APITestCase):
         self.client.logout()
         response = self.client.get(self.list_url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)  # Adjust depending on your authentication settings
+
+class BookAPITestCase(APITestCase):
+    def setUp(self):
+        # Create a user for authentication tests
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        # Create sample data
+        self.book1 = Book.objects.create(title='Book One', author='Author A', publication_year=2021)
+        self.book2 = Book.objects.create(title='Book Two', author='Author B', publication_year=2022)
+        self.list_url = reverse('book-list')
+
+    def test_authentication_required(self):
+        # Attempt to access without logging in
+        response = self.client.get(self.list_url)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_successful_login(self):
+        # Log in with the created user
+        login = self.client.login(username='testuser', password='testpassword')
+        self.assertTrue(login)
+        response = self.client.get(self.list_url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_create_book_with_authentication(self):
+        # Log in before creating a book
+        self.client.login(username='testuser', password='testpassword')
+        data = {'title': 'Book Three', 'author': 'Author C', 'publication_year': 2023}
+        response = self.client.post(self.list_url, data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Book.objects.count(), 3)
+
+    # Add additional tests for update, delete, etc., requiring authentication as need
+
+    

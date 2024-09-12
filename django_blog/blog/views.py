@@ -135,3 +135,24 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.author
+    
+
+    class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/add_comment.html'
+
+    def form_valid(self, form):
+        # Get the post using post_id from URL
+        post_id = self.kwargs['post_id']
+        post = get_object_or_404(Post, id=post_id)
+
+        # Assign the post and author to the comment instance
+        form.instance.post = post
+        form.instance.author = self.request.user
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        # Redirect to the post detail page after a successful comment
+        return self.object.post.get_absolute_url()

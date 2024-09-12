@@ -4,8 +4,10 @@ from . import views
 from django.urls import path
 from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView
 from .views import (
-    add_comment, CommentUpdateView, CommentDeleteView, PostDetailView
+    add_comment, CommentUpdateView, CommentDeleteView, PostDetailView ,
 )
+from .views import search
+from .views import PostListByTagView 
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -23,5 +25,7 @@ urlpatterns = [
     path('post/<int:pk>/comments/new/', add_comment, name='comment-add'),
     path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name='comment-edit'),
     path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment-delete'),
+    path('tags/<slug:tag_slug>/', PostListByTagView.as_view(), name='posts_by_tag'),
+    path('search/', search, name='search'),
 ]
 

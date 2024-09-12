@@ -16,9 +16,9 @@ from .models import Post
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'tags']  # Include 'tags' field
 
-
+    tags = forms.CharField(required=False, help_text="Add tags separated by commas.")
 
 
 class CommentForm(forms.ModelForm):

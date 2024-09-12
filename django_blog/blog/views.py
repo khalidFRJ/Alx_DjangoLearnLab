@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q
 
 from .forms import CustomUserCreationForm, PostForm
 from .models import Post
@@ -138,9 +139,9 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
 
     class CommentCreateView(LoginRequiredMixin, CreateView):
-    model = Comment
-    form_class = CommentForm
-    template_name = 'blog/add_comment.html'
+         model = Comment
+         form_class = CommentForm
+         template_name = 'blog/add_comment.html'
 
     def form_valid(self, form):
         # Get the post using post_id from URL
@@ -156,3 +157,16 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def get_success_url(self):
         # Redirect to the post detail page after a successful comment
         return self.object.post.get_absolute_url()
+    
+
+    def search(request):
+       query = request.GET.get('q')
+       results = []
+       if query:
+        results = Post.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(tags__name__icontains=query)  # Search in tags
+        ).distinct()
+    
+        return render(request, 'blog/search_results.html', {'results': results, 'query': query})

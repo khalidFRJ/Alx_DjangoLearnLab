@@ -45,3 +45,20 @@ class UserFeedView(generics.ListAPIView):
         followed_users = self.request.user.following.all()
         return Post.objects.filter(author__in=followed_users).order_by('-created_at')
 
+
+from django.contrib.auth import get_user_model
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from .models import Post  # Assuming you have a Post model
+
+User = get_user_model()
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_feed(request):
+    user = request.user
+    followed_users = user.following.all()
+    posts = Post.objects.filter(author__in=followed_users).order_by('-created_at')
+    # Serialize the posts as needed
+    return Response(posts)

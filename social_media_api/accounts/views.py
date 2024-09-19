@@ -62,27 +62,29 @@ class UserProfileView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+User = get_user_model()
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def follow_user(request, user_id):
-    target_user = get_object_or_404(CustomUser, id=user_id)
-    
-    if request.user == target_user:
-        return Response({"error": "You cannot follow yourself."}, status=status.HTTP_400_BAD_REQUEST)
-    
-    request.user.following.add(target_user)
-    return Response({"message": f"You are now following {target_user.username}"}, status=status.HTTP_200_OK)
+    user_to_follow = get_object_or_404(User, id=user_id)
+    request.user.following.add(user_to_follow)
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def unfollow_user(request, user_id):
-    target_user = get_object_or_404(CustomUser, id=user_id)
-    
-    if request.user == target_user:
-        return Response({"error": "You cannot unfollow yourself."}, status=status.HTTP_400_BAD_REQUEST)
-    
-    request.user.following.remove(target_user)
-    return Response({"message": f"You have unfollowed {target_user.username}"}, status=status.HTTP_200_OK)
+    user_to_unfollow = get_object_or_404(User, id=user_id)
+    request.user.following.remove(user_to_unfollow)
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 
 

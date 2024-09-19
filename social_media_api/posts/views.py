@@ -55,10 +55,10 @@ from .models import Post  # Assuming you have a Post model
 User = get_user_model()
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([permissions.IsAuthenticate])
 def user_feed(request):
     user = request.user
     followed_users = user.following.all()
-    posts = Post.objects.filter(author__in=followed_users).order_by('-created_at')
+    posts = Post.objects.filter(author__in=following_users).order_by('-created_at')
     # Serialize the posts as needed
     return Response(posts)

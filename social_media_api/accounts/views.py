@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.views import APIView , 
+from rest_framework.views import APIView 
 from rest_framework.authtoken.models import Token 
 from rest_framework.permissions import AllowAny , IsAuthenticated , permission_classes
 from django.contrib.auth import authenticate
@@ -12,9 +12,22 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
 from .models import CustomUser
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def follow_user(request, user_id):
+    # Follow logic
+
+ @api_view(['POST'])
+ @permission_classes([IsAuthenticated])
+ def unfollow_user(request, user_id):
+    # Unfollow logic
 
 
-class UserRegistrationView(APIView):
+
+  class UserRegistrationView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -77,8 +90,3 @@ def unfollow_user(request, user_id):
     request.user.following.remove(target_user)
     return Response({"message": f"You have unfollowed {target_user.username}"})
 
-from rest_framework.permissions import IsAuthenticated
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def follow_user(request, user_id):
-    

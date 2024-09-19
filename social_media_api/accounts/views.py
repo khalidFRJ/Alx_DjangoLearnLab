@@ -15,19 +15,10 @@ from .models import CustomUser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def follow_user(request, user_id):
-    # Follow logic
 
- @api_view(['POST'])
- @permission_classes([IsAuthenticated])
- def unfollow_user(request, user_id):
-    # Unfollow logic
+  
 
-
-
-  class UserRegistrationView(APIView):
+class UserRegistrationView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -71,22 +62,27 @@ class UserProfileView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def follow_user(request, user_id):
     target_user = get_object_or_404(CustomUser, id=user_id)
+    
     if request.user == target_user:
         return Response({"error": "You cannot follow yourself."}, status=status.HTTP_400_BAD_REQUEST)
-
+    
     request.user.following.add(target_user)
-    return Response({"message": f"You are now following {target_user.username}"})
+    return Response({"message": f"You are now following {target_user.username}"}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def unfollow_user(request, user_id):
     target_user = get_object_or_404(CustomUser, id=user_id)
+    
     if request.user == target_user:
         return Response({"error": "You cannot unfollow yourself."}, status=status.HTTP_400_BAD_REQUEST)
-
+    
     request.user.following.remove(target_user)
-    return Response({"message": f"You have unfollowed {target_user.username}"})
+    return Response({"message": f"You have unfollowed {target_user.username}"}, status=status.HTTP_200_OK)
+
+
 

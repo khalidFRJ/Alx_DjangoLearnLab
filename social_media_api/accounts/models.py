@@ -1,10 +1,20 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from django.shortcuts import get_object_or_404
+from .models import CustomUser
+
+
+
 
 class CustomUser(AbstractUser):
-    bio = models.TextField(null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
-    followers = models.ManyToManyField('self', symmetrical=False, related_name='following')
+    following = models.ManyToManyField('self', symmetrical=False, related_name='followers')
+
+    def __str__(self):
+        return self.username
+
 
     groups = models.ManyToManyField(
         'auth.Group',
@@ -24,4 +34,9 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+
+
+
 

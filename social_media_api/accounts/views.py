@@ -14,6 +14,7 @@ from django.shortcuts import get_object_or_404
 from .models import CustomUser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
+from rest_framework import mixins, generics , viewsets
 
 
   
@@ -78,7 +79,7 @@ def follow_user(request, user_id):
     request.user.following.add(user_to_follow)
     return Response(status=status.HTTP_204_NO_CONTENT)
 
-@api_view(['POST'])
+@api_view(generics.GenericAPIView)
 @permission_classes([IsAuthenticated])
 def unfollow_user(request, user_id):
     user_to_unfollow = get_object_or_404(User, id=user_id)

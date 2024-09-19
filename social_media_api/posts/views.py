@@ -55,7 +55,7 @@ from .models import Post  # Assuming you have a Post model
 User = get_user_model()
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticate])
+@permission_classes([permissions.IsAuthenticated])
 def user_feed(request):
     user = request.user
     followed_users = user.following.all()

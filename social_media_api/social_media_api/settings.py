@@ -79,11 +79,14 @@ WSGI_APPLICATION = 'social_media_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',  # or the database you're using
+        'NAME': 'mysql',
+        'USER': 'root',         # This should be present
+        'PASSWORD': 'khalid',
+        'HOST': 'root',
+        'PORT': '5432',                 # This should be present (default port for PostgreSQL is 5432)
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -136,4 +139,5 @@ REST_FRAMEWORK = {
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_SSL_REDIRECT = True  # Only if using HTTPS
+SECURE_SSL_REDIRECT = True  
+
